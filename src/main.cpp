@@ -1,18 +1,9 @@
-#ifdef __APPLE__
-# include <OpenGL/gl.h>
-# include <OpenGL/glu.h>
-# include <GLUT/glut.h>
-#else
-# include <GL/gl.h>
-# include <GL/glu.h>
-# include <GL/freeglut.h>
-#endif
-
 #include <stdio.h>
 #include <math.h>
 #include <ctype.h>
-#include "persons.cpp"
-#include "./include/define.h"
+#include "include/define.h"
+#include "include/person.h"
+#include "include/geometric_figure.h"
 /**
  * Titulo de la ventana.
  */
@@ -27,6 +18,7 @@ unsigned int width_screen=600,height_screen=400;
 Person ball=Person(width_screen/2,height_screen/2,0.2,1,69,69);
 Person light_ball=Person(width_screen/3,height_screen/2,0.2,1);
 Point p_camara=Point(0,0);
+Person gamer=Person(width_screen/3,height_screen/2,1,1,50,50);
 double speed_camara=1;
 bool keyStates[MAX_KEY];//Estados de las teclas. Al llamar a key up se debe volver al false.
 bool keySpecialStates[MAX_KEY_SPECIAL];
@@ -34,7 +26,7 @@ unsigned short tema=TEMA_GAME;
 
 //end.
 //Una funcion que hice para crear rectangulos, pero ahora ya no es necesaria usando GL_QUANS, al menos que necesites crear los bordes.
-void draw_rect(Person* rect){
+void draw_ball(Person* rect){
 	unsigned int* dim2d=rect->get_dim2d();
 	glBegin(GL_QUADS);
 	//glScalef(1.0f, 2.5f, 1.0f);
@@ -76,14 +68,13 @@ void draw_rect(Person* rect){
 //Evento de redimencionamiento de la ventana.
 void reshape_cb (int w, int h) {
 	if (w==0||h==0) return;
-	glViewport(p_camara.x,p_camara.y,w,h);//Nota: hay que ponerle las coordenadas de la camara.
-	
+	glViewport(0,0,w,h);//Nota: hay que ponerle las coordenadas de la camara.
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(p_camara.x,w,p_camara.y,h);
+	gluOrtho2D(0,w,0,h);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
-	width_screen=w;height_screen=h;//Update screen dimension.
+	gamer.x=(width_screen=w)/2;gamer.y=(height_screen=h)/2;//Update screen dimension.
 }
 //Solo util con pelota que revota por la pantalla.
 void move_no_choque(Person* p,unsigned int limit_w,unsigned int limit_h,unsigned short* _is_left,unsigned short* _is_top){
@@ -110,7 +101,6 @@ void move_no_choque(Person* p,unsigned int limit_w,unsigned int limit_h,unsigned
 void move_var(){
 	//glLoadIdentity();
 	tratar_teclas_especiales();
-	glViewport(p_camara.x,p_camara.y,width_screen,height_screen);
 	ball.angle+=(!is_180_agle)?1:-1;
 	if (ball.angle>180)
 		is_180_agle=1;
@@ -140,6 +130,7 @@ void display_cb() {
 			  p_camara.x+width_screen,p_camara.y+height_screen, 1);
 	*/
 	glPushMatrix ();
+	glTranslated(p_camara.x,p_camara.y,1);
 	glEnable(GL_COLOR_MATERIAL);
 	//glRotatef(90,0,0,1);//Hasta 180ª
 	// Set the camera
@@ -169,106 +160,22 @@ void display_cb() {
 	glVertex2d(300,450);
 	glColor3f(1,1,0); glLineWidth(3);
 	glEnd();
-	draw_rect(&ball);
+	draw_ball(&ball);
 	glColor3f(1,0,0);
 	glLineWidth(30);
 	glBegin(GL_QUADS);
-	glVertex2i(p_camara.x-10,p_camara.y-100); glVertex2i(p_camara.x+100,p_camara.y-100);
-	glVertex2i(p_camara.x+10,p_camara.y-100);glVertex2i(p_camara.x+100,p_camara.y+100);
+	int n=10;
+	glVertex2i(p_camara.x-n,p_camara.y-n); glVertex2i(p_camara.x+n,p_camara.y-n);
+	glVertex2i(p_camara.x+n,p_camara.y-n);glVertex2i(p_camara.x+n,p_camara.y+n);
 	
-	glVertex2i(p_camara.x+100,p_camara.y+100);glVertex2i(p_camara.x-100,p_camara.y+100);
-	glVertex2i(p_camara.x-100,p_camara.y+100);glVertex2i(p_camara.x-100,p_camara.y-100);
+	glVertex2i(p_camara.x+n,p_camara.y+n);glVertex2i(p_camara.x-n,p_camara.y+n);
+	glVertex2i(p_camara.x-n,p_camara.y+n);glVertex2i(p_camara.x-n,p_camara.y-n);
 	glEnd();
+	draw_rect(&gamer);
 	glPopMatrix();
 	glutSwapBuffers();//cambiamos los bufferes
 }
-/*Evento del mouse.*/
-void mouse(int boton, int estado, int x, int y){
-	//glutWarpPointer() mueve el puntero del mouse a las coordenadas relativas a la ventana dadas por x e y .
-/*Dejo esto para que veas como contruir esta funcion: Nota lo saque de internet.
-	switch (boton)
-	{
-		
-	case GLUT_LEFT_BUTTON:
-		if (estado = GLUT_DOWN){
-			xPos += xSpeed;
-			yPos += ySpeed;
-			if(x == xPos){
-				x= xPosMin;
-				xSpeed = -xSpeed;
-				xPosMin = xLeft + ballRadius;
-			}
-			else if (y== yPos){
-				y =yPosMin;
-				ySpeed= -ySpeed;
-			}
-		}
-		else{
-			
-		}
-		glutPostRedisplay();
-	default:
-		break;
-	}*/
-}
-/*Evento del teclado. @todo: Hacer: Crear una macro que obtenga el caracter en minuscula.*/
-void teclado(unsigned char key,int x,int y){
-	if(key>='A' && key<='Z'){
-		key=tolower(key);
-	}
-	static bool is_full_screen=true;
-	switch (key)
-	{
-	case 'h'://Solo fue para probar como funciona.
-		glViewport(ball.x,ball.y,width_screen,height_screen);//Mueve la camara.
-		break;
-	case 'q':
-		exit (0);
-		break;
-	case 'p':
-		glutFullScreen();//Si esta en pantalla completa no hara nada.
-		if (is_full_screen){//Quitamos la pantalla completa.
-			glutInitWindowSize (width_screen,height_screen);
-			glutPositionWindow(0,0);
-		}
-		is_full_screen!=true;
-		break;
-	default:
-		keyStates[key]=true;
-	}
-}
-void key_up(unsigned char key,int x,int y){
-	if(key>='A' && key<='Z'){
-		key=tolower(key);
-	}
-	keyStates[key]=false;
-}
-void special_key(int key,int x, int y){
-	keySpecialStates[key]=true;
-}
-void special_key_up(int key,int x, int y){
-	keySpecialStates[key]=false;
-}
-void tratar_teclas_especiales(){
-	switch(tema){
-	case TEMA_GAME:
-		if(keySpecialStates[GLUT_KEY_UP]){
-			p_camara.y-=speed_camara;
-		}
-		if (keySpecialStates[GLUT_KEY_DOWN]){
-			p_camara.y+=speed_camara;
-		}
-		if (keySpecialStates[GLUT_KEY_LEFT]){
-			p_camara.x+=speed_camara;
-		}
-		if (keySpecialStates[GLUT_KEY_RIGHT]){
-			p_camara.x-=speed_camara;
-		}
-		break;
-	case TEMA_MAIN:
-		break;
-	}
-}
+
 /*Inicializar todas las configuraciones de glut.*/
 void initialize() {
 	//GLUT_DEPTH|GLUT_DOUBLE
@@ -297,4 +204,71 @@ int main (int argc, char **argv) {
 	initialize();
 	glutMainLoop();//Buvle para procesar eventos.
 	return 0;
+}
+
+
+/********EVEMTOS TECLADO Y MOUSE************/
+void mouse(int boton, int estado, int x, int y){
+}
+/*Evento del teclado. @todo: Hacer: Crear una macro que obtenga el caracter en minuscula.*/
+void teclado(unsigned char key,int x,int y){
+	if(key>='A' && key<='Z'){
+		key=tolower(key);
+	}
+	//static bool is_full_screen=true; // Si no funciona el fullscreen entonces no nos sirve.
+	switch (key)
+	{
+	case 'h'://Solo fue para probar como funciona.
+		glViewport(ball.x,ball.y,width_screen,height_screen);//Mueve la camara.
+		break;
+	case 'q':
+		exit (0);
+		break;
+	case 'p'://Nota: Por alguna razon no funciona el full screen.
+		/*glutFullScreen();//Si esta en pantalla completa no hara nada.
+		if (!is_full_screen){//Quitamos la pantalla completa.
+			glutInitWindowSize (width_screen,height_screen);
+			glutPositionWindow(0,0);
+		}
+		is_full_screen!=true;*/
+		break;
+	default:
+		keyStates[key]=true;
+	}
+}
+void key_up(unsigned char key,int x,int y){
+	if(key>='A' && key<='Z'){
+		key=tolower(key);
+	}
+	keyStates[key]=false;
+}
+void special_key(int key,int x, int y){
+	keySpecialStates[key]=true;
+}
+void special_key_up(int key,int x, int y){
+	keySpecialStates[key]=false;
+}
+void tratar_teclas_especiales(){
+	switch(tema){
+	case TEMA_GAME:
+		if(keySpecialStates[GLUT_KEY_UP]){
+			p_camara.y-=gamer.speed;
+			gamer.y+=gamer.speed;//A juro debemos hacer operaciones distintas al de la camara.
+		}
+		if (keySpecialStates[GLUT_KEY_DOWN]){
+			p_camara.y+=gamer.speed;
+			gamer.y-=gamer.speed;
+		}
+		if (keySpecialStates[GLUT_KEY_LEFT]){
+			p_camara.x+=gamer.speed;
+			gamer.x-=gamer.speed;
+		}
+		if (keySpecialStates[GLUT_KEY_RIGHT]){
+			p_camara.x-=gamer.speed;
+			gamer.x+=gamer.speed;
+		}
+		break;
+	case TEMA_MAIN:
+		break;
+	}
 }

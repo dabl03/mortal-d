@@ -1,2 +1,2 @@
-./bin/*
-./mortal-d.exe
+bin/*.o
+.mortal-d.exe

@@ -67,7 +67,7 @@ void draw_rect(Person* rect){
 		glColor3f(0,0,0);
 	glEnd();
 	glPointSize(30);
-	//Je pequeña lampara.
+	//Je pequeÃ±a lampara.
 	glColor3f(1,1,1);
 	glBegin(GL_POINTS);
 	glVertex3f(light_ball.x, light_ball.y, 1.0f);
@@ -111,7 +111,6 @@ void move_var(){
 	//glLoadIdentity();
 	tratar_teclas_especiales();
 	glViewport(p_camara.x,p_camara.y,width_screen,height_screen);
-	glOrtho(p_camara.x,p_camara.x+width_screen,p_camara.y+height_screen,p_camara.y,1,1);
 	ball.angle+=(!is_180_agle)?1:-1;
 	if (ball.angle>180)
 		is_180_agle=1;
@@ -142,7 +141,7 @@ void display_cb() {
 	*/
 	glPushMatrix ();
 	glEnable(GL_COLOR_MATERIAL);
-	//glRotatef(90,0,0,1);//Hasta 180ª
+	//glRotatef(90,0,0,1);//Hasta 180Âª
 	// Set the camera
 	
 	glColor3f(0,0,1); glLineWidth(30);

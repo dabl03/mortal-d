@@ -5,4 +5,4 @@
 Juego rpg de mata zombies.
 
 ## iiAdvertencia!!:
-Este juego esta en la estapa inicial. Nisiquiera tiene forma ni es jugable. Descarguelo bajo, pero recuerde que no vas a ver nada interesante. 
+Este juego está en la etapa inicial. Ni siquiera tiene forma ni es jugable. Descarguelo, pero recuerde que no vas a ver nada interesante.

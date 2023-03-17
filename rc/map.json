@@ -1,2 +1,12 @@
 {
+	"mundo_1":{
+		"img":"./img/world_1.png",
+		"dimension":{
+
+		},
+		"start point coordinates":[
+			
+		],
+		"action coords":[]
+	}
 }

@@ -1,0 +1,8 @@
+bin/*.o
+src/stypy.py
+.vs/*
+mortal-d.exe
+mortal-d.sln
+mortal-d.vcxproj
+mortal-d.vcxproj.filters
+mortal-d.vcxproj.user

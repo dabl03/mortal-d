@@ -1,7 +1,5 @@
 #include "include/load_media.h"
-#include <string>
-#include <jsoncpp/json.h>
-#include <fstream>
+
 void ShowBMP(char *file, SDL_Surface *screen, int x, int y)
 {
     SDL_Surface *image;
@@ -27,13 +25,28 @@ void ShowBMP(char *file, SDL_Surface *screen, int x, int y)
 
     SDL_FreeSurface(image);
 }
-bool load_media::load(char* name){
-	char* name_file=new char[std::char_traits<char>::length(name)+6];
-	std::char_traits<CharT>::copy(name_file,name);
-	std::char_traits<CharT>::copy(name_file,"json");
-	Json::Value root;
-	std::ifstream ifs;
-	ifs.open(name_file);
 
-	return false;
+bool load_media::load_json(char* name, json::Value* root) {
+	char* name_file = new char[std::char_traits<char>::length(name) + 6];
+	std::char_traits<CharT>::copy(name_file, name);
+	std::char_traits<CharT>::copy(name_file, "json");
+	std::ifstream ifs;
+	Json::CharReaderBuilder builder;
+	JSONCPP_STRING errs;
+	ifs.open(name_file);
+	builder["collectComments"] = true;
+	if (!parseFromStream(builder, ifs, root, &errs)) {
+		return false;
+	}
+	ifs.close();
+	return true;
+}
+bool load_media::loads()
+{
+	json::Value root;
+	load_media::load_json("map", &root);
+	for (auto&&[k, v] : arr) {
+		map.emplace_back(k,MAP);
+	}
+	return true;
 }

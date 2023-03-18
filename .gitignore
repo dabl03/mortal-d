@@ -1,6 +1,8 @@
 bin/*.o
 src/stypy.py
 .vs/*
+Debug/*
+*.swp
 mortal-d.exe
 mortal-d.sln
 mortal-d.vcxproj

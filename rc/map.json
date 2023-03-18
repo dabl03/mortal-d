@@ -1,12 +1,46 @@
 {
-	"mundo_1":{
-		"img":"./img/world_1.png",
-		"dimension":{
-
-		},
-		"start point coordinates":[
-			
-		],
-		"action coords":[]
-	}
+  //Mundos:
+  "mundo_1": {
+    //La imagen del fondo:
+    "background": {
+      //Puede ser figuras geometricas.
+      "img": "./img/world_1.png",
+      "dimension": {
+        "x": -100,
+        "y": -100,
+        "width": 300,
+        "height": 300
+      }
+    },
+    //coordenadas del punto de inicio en este mundo. solo debes pasarle dos paratmetros, x e y:)
+    "starting point": [
+      0,
+      0
+    ],
+    "objects": [
+      {
+        "type": "tree",
+        "coords": [
+          //x y
+        ],
+        "geometric": [
+          {
+            "type": "circle",
+            "dimension": [
+              //Width and height. Tranquilo, el radio se sacara deacuerdo al width y height
+            ],
+            "color": [
+              //rbg
+              0,
+              255,
+              0
+            ]
+          }
+        ],
+        "action": "block"
+      },
+    ],
+    //Definimos la accion del los objetos estaticos en el programa. Definimos la imagen o figura geometrica y las coordenadas con la dimension.
+    
+  }
 }

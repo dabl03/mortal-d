@@ -4,7 +4,7 @@
     //La imagen del fondo:
     "background": {
       //Puede ser figuras geometricas.
-      "img": "./img/world_1.png",
+      "img": "./media/img/world_1.png",
       "dimension": {
         "x": -100,
         "y": -100,

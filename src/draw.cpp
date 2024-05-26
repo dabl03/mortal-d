@@ -7,4 +7,7 @@ void prepareScene(){
 
 void presentScene(){
 	SDL_RenderPresent(app.renderer);
-}//C:\gcc\bin;C:\gcc\libexec\gcc\i686-pc-mingw32\10.3.0;
+}
+void draw(){
+	
+}

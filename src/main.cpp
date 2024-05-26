@@ -7,13 +7,9 @@
 #include <vector>
 //Biblioteca no estandar:
 #include <SDL2/sdl.h>
-#include <json/json.h>
+#include <SDL2/SDL_main.h>
 //Mis encabezados:
-#include "include/draw.h"
-#include "include/define.h"
-//#include "include/person.hpp"
-#include "include/geometric_figure.h"
-//#include "include/draw.hpp"
+#include "./include/define.h"
 /**
  * Titulo de la ventana.
  */
@@ -26,12 +22,10 @@ double speed_camara=1;
 bool keyStates[MAX_KEY];//Estados de las teclas. Al llamar a key up se debe volver al false.
 bool keySpecialStates[MAX_KEY_SPECIAL];
 unsigned short tema=TEMA_GAME;
+std::map<std::string,SDL_Surface*> images;
+std::map<std::string,SDL_Surface*> resource_images;/*For already loaded resources*/
 App app;
 bool end=false;
-bool load_media(std::map<char*,std::vector<SDL_Surface*>>* media){
-
-	return false;
-}
 /*Inicializar todas las configuraciones de sdl.*/
 void sdl_initialize() {
 	int rendererFlags, windowFlags;
@@ -74,6 +68,7 @@ void end_sdl(){
 		SDL_DestroyWindow(app.window);
 		app.window = NULL;
 	}
+	Load_Media::clear();
 	puts("Bye:)");
     SDL_Quit();
 }

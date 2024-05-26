@@ -8,7 +8,7 @@ void draw_rect(Person* p){
 	//rect_vertical
 	glVertex2i(p->x+dim[0],p->y+dim[1]);glVertex2i(p->x,p->y+dim[1]);//----
 	glVertex2i(p->x,p->y); glVertex2i(p->x,p->y+dim[1]);// |
-	glEnd();
+	glEnd(); 
 }
 void draw_rect(Point* p,int width,int height){
 	Person pe=Person(p->x,p->y,1,1,width,height,NULL);

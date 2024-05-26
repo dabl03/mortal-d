@@ -9,5 +9,6 @@ Este juego está en la etapa inicial. Ni siquiera tiene forma ni es jugable. Des
 
 ## Dependencia:
 Usamos las siguientes bibliotecas de tercero:
-- [json](https://github.com/open-source-parsers/jsoncpp): La usamos para leer archivos json.
+- [nlohmann json](https://github.com/nlohmann/json): La usamos para leer archivos json y permitir comentarios.
 - [sdl2](https://github.com/libsdl-org/SDL): la usamos para crear la ventana y tratar los eventos.
+- [SDL2 - Image](https://github.com/libsdl-org/SDL_image): La usamos para tratar imagenes.

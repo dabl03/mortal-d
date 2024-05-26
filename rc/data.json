@@ -1,0 +1,28 @@
+{
+  "Multimedia":{
+    "img":[
+      /*All images must have an ID which is called on the maps.*/
+      {"id":"calabera","path":"./media/img/calavera.bmp"},
+      {"id":"suelo 1","path":"./media/img/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/sprites/UI_Flat_Slot_01_Unavailable.png"}
+    ],
+    "sounds":[
+
+    ],
+    /*All sprites*/
+    "sprite":[
+      {
+        "id":"pack fondo 1",
+        "path":"./media/img/Complete_GUI_Essential_Pack_Free_Version/01_Basic_Collection/01_Flat_Theme/Spritesheets",
+        /*To be able to divide the image into small boxes of the following dimensions:*/
+        /*By default it is 32x32*/
+        "dimension":[32,32]
+      }
+    ]
+  },
+  "maps":[
+    {
+      "name":"Nivel 1",
+      "path":"./rc/Nivel 1.json"
+    }
+  ]
+}

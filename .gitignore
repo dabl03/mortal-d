@@ -1,5 +1,4 @@
 bin/*.o
-src/stypy.py
 .vs/*
 Debug/*
 *.swp

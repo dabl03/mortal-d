@@ -13,7 +13,7 @@ Point::Point(const Point* p){
 Point::Point(const double* p){
 	this->x=p[0];
 	this->y=p[1];
-};
+}; 
 /**
  * Clase que almacena las dimensiones y coordenadas de cada personaje.
  */
